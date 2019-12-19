@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import axios from 'axios';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
+
+
 const UserForm = (props) => {
     const {values, errors, touched, status} = props;
     const [user, setUser] = useState([]);
@@ -16,34 +18,49 @@ const UserForm = (props) => {
 
     useEffect(()=>{
         console.log("Status has changed", status);
+        
         status && setUser([...user, status]);
     }, [status])
 
 
 
     return (
-        <div>
-            <Form>
-                <label>
-                    Username:
-                    <Field name="username" type="text" placeholder="username"/>
+        <div className="formContainer">
+            <Form className="theForm">
+
+                <label className="theLabel" htmlFor="username">
+                    Username:</label>
+                    <Field className="theInput" name="username" type="text" placeholder="username"/>
                     {touched.username && errors.username && (<p>{errors.username}</p>)}
-                </label>
-                <label>
-                    Email:
-                    <Field name="email" type="text" placeholder="email"/>
+                
+                <label className="theLabel" htmlFor="email">
+                    Email:</label>
+                    <Field className="theInput" name="email" type="text" placeholder="email"/>
                     {touched.email && errors.email && (<p>{errors.email}</p>)}
-                </label>
-                <label>
-                    Password:
-                    <Field name="password" type="text" placeholder="password"/>
+                
+                <label className="theLabel" htmlFor="password">
+                    Password:</label>
+                    <Field className="theInput" name="password" type="text" placeholder="password"/>
                     {touched.password && errors.password && (<p>{errors.password}</p>)}
-                </label>
-                <label>
-                    Agree to the Terms of Service:
-                    <Field name="tos" type="checkbox" checked={values.tos}/>
+
+                <label className="theLabel" htmlFor="role">
+                    Role:</label>
+                    <Field className="theInput" name="role" as="select" placeholder="role">
+                        <option disabled>Choose your Role</option>
+                        <option value="front">Front End Developer</option>
+                        <option value="react1">React I Developer</option>
+                        <option value="react2">React II Developer</option>
+                        <option value="back">Back End Developer</option>
+                    </Field>
+                    {touched.role && errors.role && (<p>{errors.role}</p>)}
+
+                    
+                
+                <label className="theLabel" htmlFor="tos">
+                    Agree to the Terms of Service:</label>
+                    <Field className="check" name="tos" type="checkbox" checked={values.tos}/>
                     {touched.tos && errors.tos && (<p>{errors.tos}</p>)}
-                </label>
+                
                 <button type="submit">Submit</button>
             </Form>
             <div>
@@ -68,6 +85,7 @@ const FormikUserForm = withFormik({
             username: props.username || "",
             email: props.email || "",
             password: props.password || "",
+            role: props.role || "",
             tos: props.tos || false
         })
     },
@@ -75,6 +93,7 @@ const FormikUserForm = withFormik({
         username: Yup.string().required(),
         email: Yup.string().required(),
         password: Yup.string().min(5).required(),
+        // role: Yup.oneOf(['front', 'react1', 'react2', 'back']),
         tos: Yup.boolean().oneOf([true], "you must agree")
 
     }
