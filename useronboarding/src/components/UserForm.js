@@ -28,41 +28,36 @@ const UserForm = (props) => {
         <div className="formContainer">
             <Form className="theForm">
 
-                <label className="theLabel" htmlFor="username">
-                    Username:</label>
-                    <Field className="theInput" name="username" type="text" placeholder="username"/>
-                    {touched.username && errors.username && (<p>{errors.username}</p>)}
+                <label className="theLabel" htmlFor="username">Username:</label>
+                <Field className="theInput" name="username" type="text" placeholder="username"/>
+                <div className="hidden">{touched.username && errors.username && (<p>{errors.username}</p>)}</div>
                 
-                <label className="theLabel" htmlFor="email">
-                    Email:</label>
-                    <Field className="theInput" name="email" type="text" placeholder="email"/>
-                    {touched.email && errors.email && (<p>{errors.email}</p>)}
+                <label className="theLabel" htmlFor="email">Email:</label>
+                <Field className="theInput" name="email" type="text" placeholder="email"/>
+                <div className="hidden">{touched.email && errors.email && (<p>{errors.email}</p>)}</div>
                 
-                <label className="theLabel" htmlFor="password">
-                    Password:</label>
-                    <Field className="theInput" name="password" type="text" placeholder="password"/>
-                    {touched.password && errors.password && (<p>{errors.password}</p>)}
+                <label className="theLabel" htmlFor="password">Password:</label>
+                <Field className="theInput" name="password" type="text" placeholder="password"/>
+                <div className="hidden">{touched.password && errors.password && (<p>{errors.password}</p>)}</div>
 
-                <label className="theLabel" htmlFor="role">
-                    Role:</label>
-                    <Field className="theInput" name="role" as="select" placeholder="role">
-                        <option disabled>Choose your Role</option>
-                        <option value="front">Front End Developer</option>
-                        <option value="react1">React I Developer</option>
-                        <option value="react2">React II Developer</option>
-                        <option value="back">Back End Developer</option>
-                    </Field>
-                    {touched.role && errors.role && (<p>{errors.role}</p>)}
+                <label className="theLabel" htmlFor="role"> Role:</label>
+                <Field className="theInput" name="role" as="select" placeholder="role">
+                    <option disabled value="">Choose your Role</option>
+                    <option value="front">Front End Developer</option>
+                    <option value="react1">React I Developer</option>
+                    <option value="react2">React II Developer</option>
+                    <option value="back">Back End Developer</option>
+                </Field>
+                <div className="hidden">{touched.role && errors.role && (<p>{errors.role}</p>)}</div>
 
+                <label className="theLabel" htmlFor="tos">Agree to the Terms of Service:</label>
+                <Field className="check" name="tos" type="checkbox" checked={values.tos}/>
+                <div className="hidden">{touched.tos && errors.tos && (<p>{errors.tos}</p>)}</div>
                     
-                
-                <label className="theLabel" htmlFor="tos">
-                    Agree to the Terms of Service:</label>
-                    <Field className="check" name="tos" type="checkbox" checked={values.tos}/>
-                    {touched.tos && errors.tos && (<p>{errors.tos}</p>)}
                 
                 <button type="submit">Submit</button>
             </Form>
+            
             <div>
                 {user.map(user=>{
                     return(
@@ -93,10 +88,11 @@ const FormikUserForm = withFormik({
         username: Yup.string().required(),
         email: Yup.string().required(),
         password: Yup.string().min(5).required(),
-        // role: Yup.oneOf(['front', 'react1', 'react2', 'back']),
+        role: Yup.string().required(),
         tos: Yup.boolean().oneOf([true], "you must agree")
 
     }
+
 
     ),
     handleSubmit(values, {setStatus, resetForm}){
