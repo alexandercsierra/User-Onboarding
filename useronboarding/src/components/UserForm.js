@@ -7,9 +7,10 @@ import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 const UserForm = (props) => {
     const {values, errors, touched, status} = props;
     const [user, setUser] = useState([]);
+    const [isChecked, setIsChecked] = useState(false);
     
     // console.log("values", values);
-    // console.log("errors", errors);
+    console.log("errors", errors);
     // console.log("touched", touched);
 
 
@@ -40,7 +41,8 @@ const UserForm = (props) => {
                 </label>
                 <label>
                     Agree to the Terms of Service:
-                    <Field name="tos" type="checkbox"/>
+                    <Field name="tos" type="checkbox" checked={values.tos}/>
+                    {touched.tos && errors.tos && (<p>{errors.tos}</p>)}
                 </label>
                 <button type="submit">Submit</button>
             </Form>
@@ -66,13 +68,14 @@ const FormikUserForm = withFormik({
             username: props.username || "",
             email: props.email || "",
             password: props.password || "",
-            tos: props.tos || ""
+            tos: props.tos || false
         })
     },
     validationSchema: Yup.object().shape({
         username: Yup.string().required(),
         email: Yup.string().required(),
-        password: Yup.string().min(5).required()
+        password: Yup.string().min(5).required(),
+        tos: Yup.boolean().oneOf([true], "you must agree")
 
     }
 
