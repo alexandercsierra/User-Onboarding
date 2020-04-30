@@ -29,15 +29,15 @@ const UserForm = (props) => {
             <Form className="theForm">
 
                 <label className="theLabel" htmlFor="username">Username:</label>
-                <Field className="theInput" name="username" type="text" placeholder="username"/>
-                <div className="hidden">{touched.username && errors.username && (<p>{errors.username}</p>)}</div>
+                <Field className="theInput" name="username" type="text" placeholder="username" data-cy="username"/>
+                <div className="hidden">{touched.username && errors.username && (<p data-cy="usernameError">{errors.username}</p>)}</div>
                 
                 <label className="theLabel" htmlFor="email">Email:</label>
-                <Field className="theInput" name="email" type="text" placeholder="email"/>
+                <Field className="theInput" name="email" type="text" placeholder="email" data-cy="email"/>
                 <div className="hidden">{touched.email && errors.email && (<p>{errors.email}</p>)}</div>
                 
                 <label className="theLabel" htmlFor="password">Password:</label>
-                <Field className="theInput" name="password" type="text" placeholder="password"/>
+                <Field className="theInput" name="password" type="text" placeholder="password" data-cy="password"/>
                 <div className="hidden">{touched.password && errors.password && (<p>{errors.password}</p>)}</div>
 
                 <label className="theLabel" htmlFor="role"> Role:</label>
@@ -51,7 +51,7 @@ const UserForm = (props) => {
                 <div className="hidden">{touched.role && errors.role && (<p>{errors.role}</p>)}</div>
 
                 <label className="theLabel" htmlFor="tos">Agree to the Terms of Service:</label>
-                <Field className="check" name="tos" type="checkbox" checked={values.tos}/>
+                <Field className="check" name="tos" type="checkbox" checked={values.tos} data-cy="tos"/>
                 <div className="hidden">{touched.tos && errors.tos && (<p>{errors.tos}</p>)}</div>
                     
                 
@@ -65,6 +65,7 @@ const UserForm = (props) => {
                             <p>Username: {user.username}</p>
                             <p>Email: {user.email}</p>
                             <p>Password: {user.password}</p>
+                    <p>Terms of Service: {String(user.tos)}</p>
                         </div>
                     )
                 })}
